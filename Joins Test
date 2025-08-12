@@ -1,0 +1,85 @@
+/* joins test */
+
+use assignments;
+create table students(std_id int primary key, first_name varchar(50),last_name varchar(50),course_id int);
+create table courses(course_id int primary key, course_name varchar(50), department varchar(50), Credits int);
+insert into students values(1,'Alice','Johnson',101),
+                           (2,'Bob','Seith',102),
+                           (3,'Charlie','Brown',103),
+                           (4,'David','Williams',101),
+                           (5,'Eve','Taylor',Null),
+                           (6,'Frank','Moore',104);
+insert into courses values(101,'Mathematics','Science',4),
+						  (102,'Physiscs','Science',3),
+                          (103,'History','Arts',2),
+                          (104,'Computer Science','Technology',1),
+                          (105,'chemistry','Science',3);
+
+select * from students;
+select * from courses;
+
+-- 1. Show each student's first name and their course name
+select s.course_id, s.first_name, c.course_name
+from Students s
+inner join courses c
+on s.course_id = c.course_id;
+
+-- 2. Display all students with their course name and department
+select concat(s.first_name,' ',s.last_name) as Name, c.course_name, c.department
+from Students s
+inner join courses c
+on s.course_id = c.course_id;
+
+-- 3. Show course names and student full names. 
+select concat(s.first_name,' ',s.last_name) as Name, c.course_name
+from Students s
+inner join courses c
+on s.course_id = c.course_id;
+
+-- 4. List students whose course credits are greater than 3. 
+select concat(s.first_name,' ',s.last_name) as Name, c.course_name, c.Credits
+from Students s
+inner join courses c
+on s.course_id = c.course_id
+where c.Credits > 3;
+
+-- 5. Find students enrolled in the 'Science' department. 
+select concat(s.first_name,' ',s.last_name) as Name, c.department
+from students s
+inner join courses c
+on s.course_id = c.course_id
+where c.department = 'Science';
+
+-- 6.  Show all students with both first and last names along with course name. 
+select s.first_name, s.last_name, c.course_name
+from students s
+inner join courses c
+on s.course_id = c.course_id;
+
+-- 7. Display student names and course names in alphabetical order by student. 
+select s.first_name, s.last_name, c.course_name
+from students s
+inner join courses c
+on s.course_id = c.course_id
+order by s.first_name;
+
+-- 8. Show student names and course names where credits = 3
+select concat(s.first_name,' ',s.last_name) as Name, c.course_name
+from Students s
+natural join courses c
+-- on s.course_id = c.course_id
+where c.Credits = 3;
+
+-- 9. Find all students in the 'Arts' department.
+select concat(s.first_name,' ',s.last_name) as Name, c.department
+from students s
+inner join courses c
+on s.course_id = c.course_id
+where c.department = 'Arts';
+
+-- 10. Show all student-course pairs ordered by course name. 
+select s.first_name, s.last_name, c.course_name
+from students s
+inner join courses c
+on s.course_id = c.course_id
+order by c.course_name;
